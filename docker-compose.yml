@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  vera-bot:
+    build: .
+    container_name: magicpin-vera-assistant
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - LLM_PROVIDER=${LLM_PROVIDER:-}
+      - LLM_API_KEY=${LLM_API_KEY:-}
+    restart: unless-stopped

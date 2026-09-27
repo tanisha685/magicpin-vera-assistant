@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>magicpin Vera AI Assistant — Command Center & Judge Simulator</title>
+  <meta name="description" content="magicpin AI Challenge - Next-Gen Merchant WhatsApp AI Assistant (Vera) with 4-Context Framework, Multi-Turn Replay & Guardrails">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h2>magicpin Vera</h2>
+          <span class="badge-tag">AI Challenge 2026</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <button class="nav-item active" data-tab="overview">
+          <span class="icon">📊</span> Overview & Health
+        </button>
+        <button class="nav-item" data-tab="composer">
+          <span class="icon">✨</span> Live Composer Sandbox
+        </button>
+        <button class="nav-item" data-tab="simulator">
+          <span class="icon">💬</span> WhatsApp Chat Replay
+        </button>
+        <button class="nav-item" data-tab="explorer">
+          <span class="icon">🗂️</span> 4-Context Explorer
+        </button>
+        <button class="nav-item" data-tab="submission">
+          <span class="icon">🚀</span> Test Pairs & Submission
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="bot-health-pill" id="healthPill">
+          <span class="status-dot online"></span>
+          <span id="healthStatusText">Bot Online (Port 8080)</span>
+        </div>
+        <div class="engine-tag">
+          <span>Engine: Hybrid LLM + Expert</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-title">
+          <h1 id="pageTitle">Overview & System Health</h1>
+          <p id="pageSubtitle">Live status of endpoints, context preloading, and 5-dimension scoring engine.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-secondary" id="refreshDataBtn">
+            <span class="icon">🔄</span> Refresh State
+          </button>
+          <button class="btn btn-primary" id="quickComposeBtn">
+            <span class="icon">⚡</span> Quick Compose
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB 1: OVERVIEW -->
+      <section class="tab-panel active" id="tab-overview">
+        <!-- Metric Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">Categories Loaded</span>
+              <span class="stat-badge cyan">Verticals</span>
+            </div>
+            <div class="stat-value" id="countCategories">5</div>
+            <div class="stat-desc">Dentists, Salons, Restaurants, Gyms, Pharmacies</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">Merchants Ingested</span>
+              <span class="stat-badge green">10 / Vertical</span>
+            </div>
+            <div class="stat-value" id="countMerchants">50</div>
+            <div class="stat-desc">Full GBP snapshots, signals & offer catalogs</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">Customer CRM Roster</span>
+              <span class="stat-badge purple">Profiles</span>
+            </div>
+            <div class="stat-value" id="countCustomers">200</div>
+            <div class="stat-desc">Visit histories, consent scopes & slot preferences</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-label">Trigger Event Feed</span>
+              <span class="stat-badge yellow">Active</span>
+            </div>
+            <div class="stat-value" id="countTriggers">100</div>
+            <div class="stat-desc">External news/research & internal CRM triggers</div>
+          </div>
+        </div>
+
+        <!-- Architecture & Contract Cards -->
+        <div class="two-col-grid">
+          <div class="card">
+            <div class="card-header">
+              <h3>📡 Challenge API Endpoints Status</h3>
+              <span class="pill green">100% Compliant</span>
+            </div>
+            <div class="endpoint-list">
+              <div class="endpoint-item">
+                <span class="method get">GET</span>
+                <span class="path">/v1/healthz</span>
+                <span class="desc">Liveness probe with context counts</span>
+                <span class="badge success">Active</span>
+              </div>
+              <div class="endpoint-item">
+                <span class="method get">GET</span>
+                <span class="path">/v1/metadata</span>
+                <span class="desc">Team identity & model architecture</span>
+                <span class="badge success">Active</span>
+              </div>
+              <div class="endpoint-item">
+                <span class="method post">POST</span>
+                <span class="path">/v1/context</span>
+                <span class="desc">Idempotent context push & atomic updates</span>
+                <span class="badge success">Active</span>
+              </div>
+              <div class="endpoint-item">
+                <span class="method post">POST</span>
+                <span class="path">/v1/tick</span>
+                <span class="desc">Proactive trigger composition (< 30s)</span>
+                <span class="badge success">Active</span>
+              </div>
+              <div class="endpoint-item">
+                <span class="method post">POST</span>
+                <span class="path">/v1/reply</span>
+                <span class="desc">Multi-turn response & action transition</span>
+                <span class="badge success">Active</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>🎯 5-Dimension Evaluation Engine</h3>
+              <span class="pill purple">Rubric 50/50</span>
+            </div>
+            <div class="dimension-breakdown">
+              <div class="dim-row">
+                <div class="dim-info">
+                  <strong>1. Specificity (10 pts)</strong>
+                  <span>Exact numbers, JIDA citations, prices, batch codes (zero fake data)</span>
+                </div>
+                <div class="dim-bar"><div class="fill green" style="width: 100%"></div></div>
+              </div>
+              <div class="dim-row">
+                <div class="dim-info">
+                  <strong>2. Category Fit (10 pts)</strong>
+                  <span>Peer clinical tone for dentists, operator-to-operator for restaurants</span>
+                </div>
+                <div class="dim-bar"><div class="fill green" style="width: 100%"></div></div>
+              </div>
+              <div class="dim-row">
+                <div class="dim-info">
+                  <strong>3. Merchant Fit (10 pts)</strong>
+                  <span>Personalized to owner name, real offers & Hinglish code-mix preferences</span>
+                </div>
+                <div class="dim-bar"><div class="fill green" style="width: 100%"></div></div>
+              </div>
+              <div class="dim-row">
+                <div class="dim-info">
+                  <strong>4. Trigger Relevance (10 pts)</strong>
+                  <span>Clear "WHY NOW?" hook addressing specific trigger event</span>
+                </div>
+                <div class="dim-bar"><div class="fill green" style="width: 100%"></div></div>
+              </div>
+              <div class="dim-row">
+                <div class="dim-info">
+                  <strong>5. Engagement Compulsion (10 pts)</strong>
+                  <span>Effort externalization, curiosity asks, single binary CTA</span>
+                </div>
+                <div class="dim-bar"><div class="fill green" style="width: 100%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: LIVE COMPOSER SANDBOX -->
+      <section class="tab-panel" id="tab-composer">
+        <div class="sandbox-layout">
+          <!-- Control Column -->
+          <div class="card sandbox-controls">
+            <div class="card-header">
+              <h3>🛠️ 4-Context Selector</h3>
+              <button class="btn btn-sm btn-secondary" id="loadRandomPresetBtn">🎲 Random Preset</button>
+            </div>
+
+            <div class="form-group">
+              <label>1. Category Context</label>
+              <select id="selectCategory" class="form-control">
+                <option value="dentists">Dentists (Peer-Clinical Voice, JIDA Research)</option>
+                <option value="salons">Salons (Warm Operator Voice, Service+Price)</option>
+                <option value="restaurants">Restaurants (Operator Voice, Covers, IPL Nuance)</option>
+                <option value="gyms">Gyms (Coach Tone, No-Shame Winback)</option>
+                <option value="pharmacies">Pharmacies (Trustworthy Precise Voice, Seniors)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>2. Merchant Context</label>
+              <select id="selectMerchant" class="form-control">
+                <!-- Injected dynamically -->
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>3. Trigger Event</label>
+              <select id="selectTrigger" class="form-control">
+                <!-- Injected dynamically -->
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>4. Customer Context (Optional - Customer Scope)</label>
+              <select id="selectCustomer" class="form-control">
+                <option value="">None (Merchant-Facing Message - Vera)</option>
+                <!-- Injected dynamically -->
+              </select>
+            </div>
+
+            <button class="btn btn-primary btn-block" id="runComposeBtn">
+              <span class="icon">⚡</span> Compose WhatsApp Message
+            </button>
+          </div>
+
+          <!-- Preview & Score Column -->
+          <div class="sandbox-results">
+            <!-- WhatsApp Mockup -->
+            <div class="card whatsapp-card">
+              <div class="wa-header">
+                <div class="wa-avatar" id="waAvatar">V</div>
+                <div class="wa-info">
+                  <h4 id="waSenderTitle">Vera (magicpin)</h4>
+                  <span id="waSenderSubtitle">to Dr. Meera • WhatsApp Business</span>
+                </div>
+                <div class="wa-badge" id="waSendAsBadge">send_as: vera</div>
+              </div>
+              <div class="wa-chat-window">
+                <div class="wa-bubble incoming">
+                  <div id="waBubbleBodyText">Click "Compose WhatsApp Message" to generate the message from the 4 contexts.</div>
+                  <div class="wa-meta">
+                    <span id="waTime">10:30 AM</span>
+                    <span class="wa-ticks">✓✓</span>
+                  </div>
+                </div>
+              </div>
+              <div class="wa-footer">
+                <span class="wa-cta-label">Primary Call to Action:</span>
+                <span class="wa-cta-pill" id="waCtaPill">open_ended</span>
+              </div>
+            </div>
+
+            <!-- Score Breakdown -->
+            <div class="card score-card">
+              <div class="card-header">
+                <h3>📊 Message Rationale & Guardrails</h3>
+                <span class="pill green" id="scoreOverall">50 / 50</span>
+              </div>
+              <div class="rationale-box" id="rationaleText">
+                The rationale explaining why this message was composed will appear here.
+              </div>
+              <div class="guardrail-badges">
+                <span class="guard-pill green">✓ Zero URLs (Meta Compliant)</span>
+                <span class="guard-pill green">✓ Taboo Filter Passed</span>
+                <span class="guard-pill green">✓ Provenance Anchored</span>
+                <span class="guard-pill green">✓ Deterministic temperature=0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: WHATSAPP CHAT REPLAY SIMULATOR -->
+      <section class="tab-panel" id="tab-simulator">
+        <div class="simulator-layout">
+          <!-- Chat Panel -->
+          <div class="card chat-simulator-card">
+            <div class="chat-header">
+              <div class="chat-contact">
+                <div class="wa-avatar">V</div>
+                <div>
+                  <h4>Vera ↔ Merchant Replay</h4>
+                  <span class="chat-status" id="chatStateStatus">Mode: ACTION • Status: Active</span>
+                </div>
+              </div>
+              <button class="btn btn-sm btn-secondary" id="resetChatBtn">🔄 Reset Session</button>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+              <div class="chat-msg vera">
+                <div class="msg-bubble">
+                  Dr. Meera, JIDA's Oct issue landed. One item relevant to your high-risk adult patients — 2,100-patient trial showed 3-month fluoride recall cuts caries recurrence 38% better than 6-month. Worth a look (2-min abstract). Want me to pull it + draft a patient-ed WhatsApp you can share? — JIDA Oct 2026 p.14
+                  <div class="msg-time">10:30 AM</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="chat-controls">
+              <div class="quick-scenarios">
+                <span class="quick-label">Simulate Judge/Merchant:</span>
+                <button class="btn-scenario" data-text="Ok lets do it. Whats next?">🎯 Intent: "Ok let's do it"</button>
+                <button class="btn-scenario" data-text="Thank you for contacting Dr. Meera's Dental Clinic! Our team will respond shortly.">🤖 Canned Auto-Reply</button>
+                <button class="btn-scenario" data-text="Stop messaging me. This is useless spam.">🛑 Hostile / Opt-out</button>
+                <button class="btn-scenario" data-text="Btw can you also help me with my GST filing this month?">🔀 Out of Scope: GST</button>
+              </div>
+
+              <div class="chat-input-row">
+                <input type="text" id="merchantInput" placeholder="Type a message as merchant..." class="form-control">
+                <button class="btn btn-primary" id="sendMerchantReplyBtn">Send Reply</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- State Inspector Panel -->
+          <div class="card state-inspector-card">
+            <div class="card-header">
+              <h3>🔍 State Machine & Action Inspector</h3>
+            </div>
+            <div class="state-metrics">
+              <div class="state-metric">
+                <span class="s-label">Current Turn</span>
+                <span class="s-value" id="inspectorTurn">Turn 1</span>
+              </div>
+              <div class="state-metric">
+                <span class="s-label">Bot Last Action</span>
+                <span class="s-value green" id="inspectorAction">send</span>
+              </div>
+              <div class="state-metric">
+                <span class="s-label">Auto-Reply Count</span>
+                <span class="s-value" id="inspectorAutoCount">0</span>
+              </div>
+              <div class="state-metric">
+                <span class="s-label">Bot Mode</span>
+                <span class="s-value purple" id="inspectorMode">QUALIFYING</span>
+              </div>
+            </div>
+            <div class="turn-history-box">
+              <h4>Turn Log & Judge Feedback</h4>
+              <div id="turnLogs" class="turn-logs">
+                <div class="log-entry">
+                  <span class="log-time">[10:30:00]</span> Bot initiated proactive trigger (JIDA Oct research digest).
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: 4-CONTEXT EXPLORER -->
+      <section class="tab-panel" id="tab-explorer">
+        <div class="explorer-layout">
+          <div class="card explorer-nav">
+            <div class="card-header">
+              <h3>🗂️ Context Scopes</h3>
+            </div>
+            <div class="explorer-tabs">
+              <button class="exp-tab active" data-scope="category">Categories (5)</button>
+              <button class="exp-tab" data-scope="merchant">Merchants (50)</button>
+              <button class="exp-tab" data-scope="customer">Customers (200)</button>
+              <button class="exp-tab" data-scope="trigger">Triggers (100)</button>
+            </div>
+            <div class="explorer-search">
+              <input type="text" id="explorerSearch" placeholder="Search context ID..." class="form-control">
+            </div>
+            <ul class="context-item-list" id="contextItemList">
+              <!-- Dynamically populated -->
+            </ul>
+          </div>
+
+          <div class="card explorer-viewer">
+            <div class="card-header">
+              <h3 id="viewerTitle">Context Details</h3>
+              <span class="pill cyan" id="viewerBadge">category: dentists</span>
+            </div>
+            <pre class="json-viewer" id="jsonViewerContent">Select an item from the list to view full context schema.</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: TEST PAIRS & SUBMISSION -->
+      <section class="tab-panel" id="tab-submission">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h3>🚀 Canonical 30 Test Pairs & Submission Generator</h3>
+              <p>Produces `submission.jsonl` matching the official challenge contract.</p>
+            </div>
+            <button class="btn btn-primary" id="generateSubmissionBtn">
+              <span class="icon">⚙️</span> Run Batch Composition & Save submission.jsonl
+            </button>
+          </div>
+
+          <div class="submission-meta-bar">
+            <span>Status: <strong id="submissionStatus">Ready to Generate</strong></span>
+            <span>Total Test Pairs: <strong id="testPairCount">30</strong></span>
+            <a href="#" class="btn btn-sm btn-secondary" id="downloadSubmissionLink" style="display:none;">
+              📥 Download submission.jsonl
+            </a>
+          </div>
+
+          <div class="table-container">
+            <table class="data-table" id="testPairsTable">
+              <thead>
+                <tr>
+                  <th>Test ID</th>
+                  <th>Trigger ID</th>
+                  <th>Merchant ID</th>
+                  <th>Customer Scope</th>
+                  <th>Send As</th>
+                  <th>Composed Body Preview</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="testPairsTbody">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js?v=2"></script>
+</body>
+</html>
